@@ -1,0 +1,152 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TEST</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/animation.css') }}">
+        
+        <style>
+            #exampleModal {
+    background: rgba(0, 0, 0, 0.5); /* Adjust the last value (alpha) for transparency */
+}
+
+.modal-content {
+    background: transparent;
+    
+}
+
+
+        </style>
+  
+</head>
+
+<body>
+
+    <div id="particles-js"></div>
+    <div class="container d-flex align-items-center justify-content-center" style="height: 100vh;">
+        <div class="row">
+            <div class="col-md-10 text-center">
+                <div class="card bg-transparent border-0" style="width: 100%;">
+                    <img src="{{ url_for('static', filename='images/facerecog.jpg') }}" alt="Your Image" class="card-img-top img-fluid">
+                    <div class="card-body">
+                        <!-- Additional content or text if needed -->
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-2 text-center d-flex align-items-center">
+                <!-- Add the class to the button -->
+                <button class="btn btn-primary register-btn" data-bs-toggle="modal" data-bs-target="#exampleModal">REGISTER USER</button>
+            </div>
+        </div>
+    </div>
+    
+
+    <!-- Register FORM HERE -->
+  <!-- Modal -->
+  <div class="modal fade " id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+           
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">REGISTER</h1>
+               
+                <span class="btn-close text-white fs-3" style="cursor: pointer;" data-bs-dismiss="modal" aria-label="Close">&#10006;</span>
+            </div>
+            <div class="modal-body">
+                <div class="text-center mb-3">
+                    <img id="previewImage" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTP0I2081-kolg-3mq_rPHy7kIj5mW4JlmoUxEl6YnZcC31R-VUDGaLtcxsjnE1xmjFIgE&usqp=CAU" alt="" class="img-fluid rounded-circle" style="width: 100px; height: 100px;">
+                </div>
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label for="name" class="form-label text-white fs-5">Name: </label>
+                        <input type="text" id="userName" name="name" placeholder="Enter Your Name" class="form-control">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="file" class="form-label text-white fs-5">Upload Your Image: </label>
+                        <input type="file" id="file" name="userImage" class="form-control">
+                    </div>
+                </div>
+            </div>
+            <div class="text-center">
+                <button type="button" id="submitForm" class="btn btn-primary">SUBMIT</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+
+    <script src="{{ url_for('static', filename='js/animation.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/register.js') }}"></script>
+   
+    <script>
+        $(document).ready(function() {
+            // Add an event listener to the file input change
+            $('#file').change(function() {
+                // Display the selected image in the preview
+                readURL(this);
+            });
+    
+            // Add an event listener to the form submission
+            $('#submitForm').click(function() {
+                // Create FormData object to serialize the form data
+                var formData = new FormData();
+    
+                // Append the name and file to the FormData object
+                formData.append('name', $('#userName').val());
+                formData.append('userImage', $('#file')[0].files[0]);
+    
+                // Make the AJAX request
+                $.ajax({
+                    url: 'http://127.0.0.1:5000/upload', // Replace with the actual backend endpoint
+                    type: 'POST',
+                    data: formData,
+                    contentType: false,
+                    processData: false,
+                    success: function(response) {
+                        // Handle the success response
+                        console.log(response);
+                        // $('#exampleModal').modal('hide');
+                        alert('User Registeration Successfully');
+                        window.location.href = '/'; ;
+                    },
+                    error: function(error) {
+                        // Handle the error response
+                        console.log(error);
+                    }
+                });
+            });
+    
+            // Initialize the Bootstrap modal
+            $('#exampleModal').modal();
+        });
+    
+        // Function to display the selected image in the preview
+        function readURL(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+    
+                reader.onload = function(e) {
+                    $('#previewImage').attr('src', e.target.result);
+                };
+    
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+    </script>
+    
+
+    
+</body>
+
+</html>
