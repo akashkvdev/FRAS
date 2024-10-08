@@ -17,7 +17,7 @@ An automated attendance system using facial recognition technology to improve at
 - **Database**: MySQL
 
 ## Screenshots
-![Attendance Dashboard](https://github.com/akashkvdev/FRAS/blob/62ec650ea4cd6cc7346c37c191d978f308ffc5cd/Untitled%20design.mp4)
+![Attendance Dashboard](https://github.com/akashkvdev/FRAS/blob/d6c4aa5e8386985a5a17ec7438db1a9157b483c6/Untitled%20design%20(1).gif)
 
 ## Setup Instructions
 1. Clone the repository: `git clone https://github.com/username/face-recognition-attendance.git`
